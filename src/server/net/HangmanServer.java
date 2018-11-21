@@ -90,16 +90,11 @@ public class HangmanServer implements Runnable {
     @Override
     public void run() {
         contr.selectedWord();
+        broadcast(MsgType.NEWGAME + "##" + contr.showCurrentState() + "##" + contr.remainingGuesses());
     }
 
     public void startGame(){
         ForkJoinPool.commonPool().execute(this);
-        try {
-            Thread.sleep(800);
-        } catch (InterruptedException e) {
-            System.err.println("Game start failure.");
-        }
-        broadcast(MsgType.NEWGAME + "##" + contr.showCurrentState() + "##" + contr.remainingGuesses());
     }
     
     private void startHandler(SelectionKey key) throws IOException {
